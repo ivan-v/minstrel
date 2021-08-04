@@ -27,14 +27,20 @@ Modes = {
 }
 
 
+
+
 class Applied_Key:
 
     def __init__(self, root, mode):
         self.name = str(root + " " + mode)
         self.root = root
         self.tones = Modes[mode]
-        self.aps = sum([[pitch + octave*12 + Starting_Pitch[self.root] for pitch in self.tones] for octave in range(-4, 4)], [])
+        self.aps = sum([[pitch + octave * 12
+                       + Starting_Pitch[self.root] for pitch in
+                       self.tones] for octave in range(-4, 4)], [])
 
 
     def __repr__(self):
-        return "".join(["(", self.name, " (", str(self.tones), ", ", str(Starting_Pitch[self.root]), "))"])
+        return "".join(["(", self.name, 
+                        " (", str(self.tones), ", ", 
+                        str(Starting_Pitch[self.root]), "))"])
