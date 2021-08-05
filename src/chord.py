@@ -101,28 +101,42 @@ def get_undertone(is_minor, operating_bit):
         return tones[int(operating_bit) - 1] - 12
 
 
-
 class Chord:
 
     def __init__(self, **kwargs):
+
         # In the format ("name='F', type='13'")
         # operating_bit is an optional tone under the root
+        
         if 'root' in kwargs:
             self.root = kwargs['root']
-            self.type = kwargs['type'] if 'type' in kwargs else 'm' if self.root.islower() else 'M'
-            self.operating_bit = kwargs['operating_bit'] if 'operating_bit' in kwargs else ''
+            self.type = (kwargs['type'] if 'type' in kwargs else ('m'
+                          if self.root.islower() else 'M'))
+            self.operating_bit = (kwargs['operating_bit'
+                                  ] if 'operating_bit' in kwargs else ''
+                                  )
             if self.operating_bit != '':
-              undertone = get_undertone('m' in self.type, self.operating_bit)
-              self.aps = [[pitch + octave*12 + Starting_Pitch[self.root] for pitch in Chord_Type_to_Pitches[self.type]] + [undertone + octave*12 + Starting_Pitch[self.root]] for octave in range(-4, 4)]
+                undertone = get_undertone('m' in self.type,
+                        self.operating_bit)
+                self.aps = [[pitch + octave * 12
+                            + Starting_Pitch[self.root] for pitch in
+                            Chord_Type_to_Pitches[self.type]]
+                            + [undertone + octave * 12
+                            + Starting_Pitch[self.root]] for octave in
+                            range(-4, 4)]
             else:
-              self.aps = [[pitch + octave*12 + Starting_Pitch[self.root] for pitch in Chord_Type_to_Pitches[self.type]] for octave in range(-4, 4)]
-            self.pitches = kwargs['pitches'] if 'pitches' in kwargs else self.aps[4]
+                self.aps = [[pitch + octave * 12
+                            + Starting_Pitch[self.root] for pitch in
+                            Chord_Type_to_Pitches[self.type]]
+                            for octave in range(-4, 4)]
+            self.pitches = (kwargs['pitches'] if 'pitches'
+                            in kwargs else self.aps[4])
         else:
-            raise ValueError("Chord has not root")
+            raise ValueError('Chord has not root')
 
     def invert(self, inversion):
-        self.pitches = [self.pitches[i] + 12 for i in range(inversion)] + self.pitches[inversion:]
+        self.pitches = [self.pitches[i] + 12 for i in range(inversion)] \
+            + self.pitches[inversion:]
         return self
 
-# print(Chord(root='C', type='M', operating_bit='b5').aps)
 
