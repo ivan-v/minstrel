@@ -27,14 +27,25 @@ Modes = {
 }
 
 
+# TODO: determine_root_and_mode_from_emotions(emotions)
+def determine_root_and_mode_from_emotions(emotions):
+    return 'C', 'Ionian'
 
 
 class Applied_Key:
 
-    def __init__(self, root, mode):
-        self.name = str(root + " " + mode)
-        self.root = root
-        self.tones = Modes[mode]
+    def __init__(self, **kwargs):
+        if "root" in kwargs and "mode" in kwargs:
+           self.root = kwargs["root"]
+           self.mode = kwargs["mode"]
+        elif "emotions" in kwargs:
+            self.root, self.mode = determine_root_and_mode_from_emotions(kwargs["emotions"])
+        else:
+            raise ValueError("Emotions not given, and neither were root & mode.")
+
+
+        self.name = str(self.root + " " + self.mode)
+        self.tones = Modes[self.mode]
         self.aps = sum([[pitch + octave * 12
                        + Starting_Pitch[self.root] for pitch in
                        self.tones] for octave in range(-4, 4)], [])
@@ -44,3 +55,5 @@ class Applied_Key:
         return "".join(["(", self.name, 
                         " (", str(self.tones), ", ", 
                         str(Starting_Pitch[self.root]), "))"])
+
+# print(Applied_Key(emotions="blah"))

@@ -1,7 +1,7 @@
 import applied_key
 
 def test_applied_key_c_major():
-    c_major = applied_key.Applied_Key('C', 'Ionian')
+    c_major = applied_key.Applied_Key(root='C', mode='Ionian')
     assert c_major.name == 'C Ionian'
     assert c_major.root == 'C'
     assert applied_key.Starting_Pitch[c_major.root] == 60
@@ -15,7 +15,7 @@ def test_applied_key_c_major():
 
 
 def test_applied_key_fs_minor():
-    fs_minor = applied_key.Applied_Key('Fs', 'Aeolian')
+    fs_minor = applied_key.Applied_Key(root='Fs', mode='Aeolian')
     assert fs_minor.name == 'Fs Aeolian'
     assert fs_minor.root == 'Fs'
     assert applied_key.Starting_Pitch[fs_minor.root] == 66
