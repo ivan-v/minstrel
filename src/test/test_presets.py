@@ -15,3 +15,5 @@ def test_presets_seed():
 
 
 example_presets_obj = presets.Presets(example_emotions_obj, example_characters_obj, 300)
+
+print(example_presets_obj.chapters)
