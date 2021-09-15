@@ -1,3 +1,4 @@
+from math import ceil
 
 def find_point(current_time, absolute_times, values):
     closest_times = find_nearest_values(current_time, absolute_times)
@@ -32,13 +33,15 @@ def find_nearest_values(value, arr):
     return {'smaller_val': (len(arr)-1, prev_val)}
 
 
-def emotions_by_absolute_times(emotions, absolute_times):
-    return list(zip(*[[emotions[emotion][absolute_times.index(current_time)] if current_time in absolute_times 
-           else find_point(current_time, absolute_times, emotions[emotion]) for current_time in range(absolute_times[-1]+1)]
-        for emotion in emotions]))
+def emotions_by_absolute_times(given_emotions, absolute_times):
+    return list(zip(*[[given_emotions[emotion][absolute_times.index(current_time)] if current_time in absolute_times 
+           else find_point(current_time, absolute_times, given_emotions[emotion]) for current_time in range(ceil(absolute_times[-1]+1))]
+        for emotion in given_emotions]))
 
 
 class Emotions:
     def __init__(self, given_emotions, absolute_times):
-        self.emotions = emotions_by_absolute_times(given_emotions, absolute_times)
+        self.old_times = absolute_times
+        self.given_emotions = given_emotions
+        self.emotions_over_time = emotions_by_absolute_times(given_emotions, absolute_times)
 
